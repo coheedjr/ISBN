@@ -25,7 +25,7 @@ def validate_isbn(isbn):
         added_digit = 10 - (base % 10)
 
         num.append(str(added_digit))
-        num = ''.join(isbn)
+        num = ''.join(num)
 
         if len(isbn) == 12:
             print(f"The ISBN is: {num}")
@@ -41,6 +41,20 @@ def validate_isbn(isbn):
         print("The ISBN is not valid.")
         return False
 
+def validate_digit(string):
+
+    old_string = list(string)
+    new_string = []
+
+    for char in old_string:
+        if char.isdigit():
+            new_string.append(char)
+        else:
+            continue
+    new_string = ''.join(new_string)
+
+    return new_string
+
 while True:
     print(dedent("""
     \n\t\tWelcome to the ISBN Validator!
@@ -51,11 +65,9 @@ while True:
 
     isbn = input("\n> ")
 
-    if isbn.isdigit():
-        isbn = list(enumerate(isbn, start=1))
-        validate_isbn(isbn)
-    elif 'exit' in isbn.lower():
+    if 'exit' in isbn.lower():
         exit(1)
     else:
-        print("Please enter a number that is either 12 or 13 digits")
-        continue
+        isbn = validate_digit(isbn)
+        isbn = list(enumerate(isbn, start=1))
+        validate_isbn(isbn)
